@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160603150236) do
+ActiveRecord::Schema.define(version: 20160603154147) do
 
   create_table "lesson_parts", force: true do |t|
     t.integer  "lesson_id"
@@ -22,6 +22,19 @@ ActiveRecord::Schema.define(version: 20160603150236) do
   end
 
   add_index "lesson_parts", ["lesson_id"], name: "index_lesson_parts_on_lesson_id"
+
+  create_table "lesson_trackers", force: true do |t|
+    t.integer  "lesson_id"
+    t.datetime "completed_at"
+    t.integer  "lesson_part_id"
+    t.integer  "student_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "lesson_trackers", ["lesson_id"], name: "index_lesson_trackers_on_lesson_id"
+  add_index "lesson_trackers", ["lesson_part_id"], name: "index_lesson_trackers_on_lesson_part_id"
+  add_index "lesson_trackers", ["student_id"], name: "index_lesson_trackers_on_student_id"
 
   create_table "lessons", force: true do |t|
     t.string   "title"
