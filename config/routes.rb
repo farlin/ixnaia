@@ -5,8 +5,11 @@ Rails.application.routes.draw do
   resources :lessons
   resources :students do
       member do
-          get 'progress'    # return progress of a student
-          post 'progress'   # save progress of a student
+          # return progress of a student
+          get 'progress', to: 'student_lesson_trackers#show', :defaults => { :format => 'json' }
+          
+          # save progress of a student
+          post 'progress', to: 'student_lesson_trackers#create',  :defaults => { :format => 'json' }
       end
   end
 
