@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160604090202) do
+ActiveRecord::Schema.define(version: 20160604123959) do
+
+  create_table "klasses", force: true do |t|
+    t.string   "name"
+    t.integer  "teacher_id"
+    t.integer  "student_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "klasses", ["student_id"], name: "index_klasses_on_student_id"
+  add_index "klasses", ["teacher_id"], name: "index_klasses_on_teacher_id"
 
   create_table "lesson_parts", force: true do |t|
     t.integer  "lesson_id"
