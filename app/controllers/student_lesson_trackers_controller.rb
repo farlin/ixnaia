@@ -31,8 +31,14 @@ class StudentLessonTrackersController < ApplicationController
     
   end
 
-  # POST /lesson_trackers
-  # POST /lesson_trackers.json
+  # POST /students/:student_id/progress.json
+  #
+  # Requirement is to accept lesson and a part number
+  # 
+  # payload [:progress] => {
+  #  :lesson_id,
+  #  :sequence,
+  # }
   def create
 
     results = {}
@@ -74,12 +80,12 @@ class StudentLessonTrackersController < ApplicationController
     
     # Use callbacks to share common setup or constraints between actions.
     def set_lesson_part
-        @lesson_part = LessonPart.find_by id: lesson_tracker_params[:lesson_part_id]
+        @lesson_part = LessonPart.find_by lesson_id: lesson_tracker_params[:lesson_id], sequence: lesson_tracker_params[:sequence]
     end
     
     # Never trust parameters from the scary internet, only allow the white list through.
     def lesson_tracker_params
-      params.require(:progress).permit(:lesson_part_id)
+      params.require(:progress).permit(:lesson_id, :sequence)
     end
     
 
