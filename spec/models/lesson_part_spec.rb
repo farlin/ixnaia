@@ -3,8 +3,30 @@ require 'rails_helper'
 
 RSpec.describe LessonPart, type: :model do
     
-    it "has a valid factory"
-    it "is invalid without a lesson"
-    it "is invalid without a sequence"
-    it "is sequentially unique for each lessson"
+    it "is invalid without a lesson" do
+        part = LessonPart.new(lesson: nil)
+        part.valid?
+        expect(part.errors[:lesson]).to include("can't be blank")
+    end
+    
+    
+    it "is invalid without a sequence" do
+        part = LessonPart.new(sequence: nil)
+        part.valid?
+        expect(part.errors[:sequence]).to include("can't be blank")
+    end
+    
+    it "does not accepts sequence smaller than 1" do
+        part = LessonPart.new(sequence: 0)
+        part.valid?
+        expect(part.errors[:sequence]).to include("0 is not a supported sequence")
+    end
+    
+    it "does not accepts sequence larger than 3" do
+        part = LessonPart.new(sequence: 4)
+        part.valid?
+        expect(part.errors[:sequence]).to include("4 is not a supported sequence")
+    end
+    
+    # it "is sequentially unique for each lessson"
 end
