@@ -5,9 +5,11 @@ class Lesson < ActiveRecord::Base
     
     # === validations ====
     validates :title, :presence => true
+    
     validate :validate_lesson_parts 
-  
     def validate_lesson_parts
       errors.add(:lesson_parts, "too many parts") if lesson_parts.size > 3
     end
+    
+    
 end

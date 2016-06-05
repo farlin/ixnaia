@@ -4,6 +4,7 @@ require 'rails_helper'
 RSpec.describe LessonPart, type: :model do
     
     it "is invalid without a lesson" do
+        
         part = LessonPart.new(lesson: nil)
         part.valid?
         expect(part.errors[:lesson]).to include("can't be blank")
@@ -11,21 +12,26 @@ RSpec.describe LessonPart, type: :model do
     
     
     it "is invalid without a sequence" do
+        
         part = LessonPart.new(sequence: nil)
         part.valid?
         expect(part.errors[:sequence]).to include("can't be blank")
     end
     
-    it "does not accepts sequence smaller than 1" do
-        part = LessonPart.new(sequence: 0)
+    it "does not accept sequence smaller than 1" do
+        
+        invalid_seq = 0
+        part = LessonPart.new(sequence: invalid_seq)
         part.valid?
-        expect(part.errors[:sequence]).to include("0 is not a supported sequence")
+        expect(part.errors[:sequence]).to include("#{invalid_seq} is not a supported sequence")
     end
     
-    it "does not accepts sequence larger than 3" do
-        part = LessonPart.new(sequence: 4)
+    it "does not accept sequence larger than 3" do
+        
+        invalid_seq = 5
+        part = LessonPart.new(sequence: invalid_seq)
         part.valid?
-        expect(part.errors[:sequence]).to include("4 is not a supported sequence")
+        expect(part.errors[:sequence]).to include("#{invalid_seq} is not a supported sequence")
     end
     
     # it "is sequentially unique for each lessson"
