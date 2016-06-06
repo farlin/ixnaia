@@ -1,12 +1,9 @@
 Rails.application.routes.draw do
   
-  resources :klasses
 
-  resources :teachers
 
-  root 'students#index'
+  root 'klasses#index'
   
-  resources :lessons
   resources :students do
       member do
           # return progress of a student
@@ -16,5 +13,8 @@ Rails.application.routes.draw do
           post 'progress', to: 'student_lesson_trackers#create',  :defaults => { :format => 'json' }
       end
   end
-
+  
+  resources :lessons
+  resources :klasses
+  resources :teachers
 end
