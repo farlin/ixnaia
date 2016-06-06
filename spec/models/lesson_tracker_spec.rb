@@ -72,13 +72,13 @@ RSpec.describe LessonTracker, type: :model do
             @lesson_two_part_iii = LessonPart.create! lesson:@lesson_two, name: "part 3", sequence: 3
             @lesson_two.save!
 
-            @student = Student.create! name: "Elmo"
         end
-        
+
         before :each do
             LessonTracker.destroy_all
+            @student = Student.create! name: "Elmo"
         end
-        
+
         it "by allowing first lesson to be set as any part" do
             #
             tracker = LessonTracker.new(completed_at: Date.today, student: @student, lesson_part: @lesson_two_part_ii)
@@ -90,15 +90,24 @@ RSpec.describe LessonTracker, type: :model do
             #
             tracker = LessonTracker.create!(completed_at: Date.today, student: @student, lesson_part: @lesson_part_i)
             tracker_second = LessonTracker.new(completed_at: Date.today, student: @student, lesson_part: @lesson_part_ii)
-            
+
             res = tracker_second.progress_allowed?
             expect(res).to be true
         end
-        
+
         it "by restricting lesson part skips" do
             #
-            tracker = LessonTracker.create!(completed_at: Date.today, student: @student, lesson_part: @lesson_part_i)
-            tracker_second = LessonTracker.new(completed_at: Date.today, student: @student, lesson_part: @lesson_part_iii)
+            tracker = LessonTracker.create!(completed_at: Date.today, student: @student, lesson_part: @lesson_part_ii)
+            tracker_second = LessonTracker.new(completed_at: Date.today, student: @student, lesson_part: @lesson_two_part_ii)
+
+            res = tracker_second.progress_allowed?
+            expect(res).to be false
+        end
+
+        it "by restricting lesson part reverts" do
+            #
+            tracker = LessonTracker.create!(completed_at: Date.today, student: @student, lesson_part: @lesson_two_part_iii)
+            tracker_second = LessonTracker.new(completed_at: Date.today, student: @student, lesson_part: @lesson_two_part_ii)
 
             res = tracker_second.progress_allowed?
             expect(res).to be false

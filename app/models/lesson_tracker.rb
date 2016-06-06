@@ -50,7 +50,7 @@ class LessonTracker < ActiveRecord::Base
          # find the next lesson
          next_in_line = max.find_next
          
-         if next_in_line.id == new_lesson.id
+         if next_in_line.present? && next_in_line.id == new_lesson.id
              is_allowed = true
          end
          
