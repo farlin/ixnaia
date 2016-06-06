@@ -1,12 +1,16 @@
-<h1>Listing klasses</h1>
-
-<table>
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Class Report</div>
+  <div class="panel-body">
+    <p>Please click on individual class report to see how your students are tracking</p>
+  </div>
+  
+<table class="table">
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Teacher</th>
-      <th>Student</th>
-      <th colspan="3"></th>
+      <th>Class Name</th>
+	  <th>Assigned Teacher</th>
+      <th colspan="3">Action</th>
     </tr>
   </thead>
 
@@ -14,16 +18,10 @@
     <% @klasses.each do |klass| %>
       <tr>
         <td><%= klass.name %></td>
-        <td><%= klass.teacher %></td>
-        <td><%= klass.student %></td>
-        <td><%= link_to 'Show', klass %></td>
-        <td><%= link_to 'Edit', edit_klass_path(klass) %></td>
-        <td><%= link_to 'Destroy', klass, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+		<td><%= klass.teacher.name %></td>
+        <td><%= link_to 'View Report', klass %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Klass', new_klass_path %>
+</div>

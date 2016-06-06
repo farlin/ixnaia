@@ -1,19 +1,30 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @klass.name %>
-</p>
-
-<p>
-  <strong>Teacher:</strong>
-  <%= @klass.teacher %>
-</p>
-
-<p>
-  <strong>Student:</strong>
-  <%= @klass.student %>
-</p>
-
-<%= link_to 'Edit', edit_klass_path(@klass) %> |
-<%= link_to 'Back', klasses_path %>
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Class Report : <%= @klass.name %></div>
+  <div class="panel-body">
+    <table class="table">
+		<tr>
+			<th>Name</th>
+			<th>Total Lessons Completed</th>
+			<th>Last Lesson Completion date</th>
+						<th>Next lesson</th>
+		</tr>
+		
+		
+		<% @klass.students.each do |student| %>
+		<tr>
+			<td><%= student.name %></td>
+			<td class="col-md-6">
+				<% student.lesson_parts.map(&:name).each do |name| %>
+				<span class="badge"><%= name %></span>
+				<% end %>
+			</td>
+			<td><%= student.lesson_trackers.last.completed_at.strftime("on %d/%m/%Y") unless student.lesson_trackers.blank? %></td>
+			<td><span class="badge"><%= student.lesson_trackers.last.lesson_part.find_next.name unless student.lesson_trackers.blank? %></span></td>
+		</tr>
+		
+		<% end %>
+		
+	</table>
+  </div>
+</div>

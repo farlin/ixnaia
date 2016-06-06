@@ -114,4 +114,11 @@ RSpec.describe LessonTracker, type: :model do
         end
     end
 
+
+
+    after(:suite) do
+      Lesson.delete_all
+      LessonPart.delete_all
+      LessonTracker.delete_all
+    end
 end

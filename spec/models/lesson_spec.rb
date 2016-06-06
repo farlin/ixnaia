@@ -23,5 +23,10 @@ RSpec.describe Lesson, type: :model do
         lesson.valid?
         expect(lesson.errors[:lesson_parts]).to include("too many parts")
     end
+    
+      
+    after(:suite) do
+      LessonPart.delete_all
+    end
 
 end

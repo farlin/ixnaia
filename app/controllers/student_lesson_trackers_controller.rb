@@ -45,13 +45,28 @@ class StudentLessonTrackersController < ApplicationController
     code = 422
     message = 'can not be saved'
     
-    @lesson_tracker = LessonTracker.new(lesson_tracker_params)
-    @lesson_tracker.student_id = @student.id
-    @lesson_tracker.lesson_id =  @lesson_part.lesson_id
-    @lesson_tracker.completed_at = Time.zone.now
+    to_save = true
     
-        
-    if @lesson_tracker.save
+    @lesson_tracker = LessonTracker.new
+    
+    if @lesson_part.present? && @student.present?
+    
+        @lesson_tracker.student_id = @student.id
+        @lesson_tracker.lesson_part_id =  @lesson_part.id
+        @lesson_tracker.lesson_id =  @lesson_part.lesson_id
+        @lesson_tracker.completed_at = Date.today
+    
+        if !@lesson_tracker.valid?
+            to_save = false
+            message = 'invalid parameters received'
+        elsif !@lesson_tracker.progress_allowed?
+            to_save = false
+            message = 'this lesson progress is not allowed'
+        end
+    end
+    
+    
+    if to_save && @lesson_tracker.save
         code = 200
         message = 'success'
         

@@ -13,7 +13,8 @@ class LessonTracker < ActiveRecord::Base
   validates :student, :presence => true
   validates :lesson_part, :presence => true
   
-  validates :lesson_part, :uniqueness => { :scope=> :lesson_part_id }
+  # lessons are uniqe per student/per lesson/per part
+  validates :lesson_part, :uniqueness => { :scope => [:lesson_part_id, :lesson_id, :student_id] }
 
   validate :completed_at_cannot_be_in_future
   def completed_at_cannot_be_in_future
