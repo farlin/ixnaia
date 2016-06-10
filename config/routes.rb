@@ -13,8 +13,5 @@ Rails.application.routes.draw do
           post 'progress', to: 'student_lesson_trackers#create',  :defaults => { :format => 'json' }
       end
   end
-  
-  resources :lessons
-  resources :klasses
-  resources :teachers
+  resources :klasses, :only => [:index, :show]
 end
